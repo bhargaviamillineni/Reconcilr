@@ -4,6 +4,8 @@
 
 **"Reconcilr — closes the gap between what you sold and what actually landed in your account."**
 
+![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow) ![Tests](https://img.shields.io/badge/tests-32%20passing-brightgreen) ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+
 ---
 
 ## The Problem
@@ -34,7 +36,7 @@ A **two-layer hybrid matcher** that solves 80% of cases with deterministic rules
 ✅ **Full Audit Trail** – Every AI decision logged with reasoning (confidence scores, match logic)  
 ✅ **Privacy-First** – Customer names/emails never sent to APIs; phone numbers auto-redacted  
 ✅ **Order-Independent** – Global assignment algorithm; results never depend on CSV row order  
-✅ **Production-Ready** – Retry with backoff, input validation, hallucination detection, 26 automated tests  
+✅ **Production-Ready** – Retry with backoff, input validation, hallucination detection, **32 automated tests (60% coverage)**  
 ✅ **Provider-Agnostic** – Swap OpenAI/Gemini with one env var; no vendor lock-in  
 
 ---
@@ -113,7 +115,7 @@ A **two-layer hybrid matcher** that solves 80% of cases with deterministic rules
 
 - **Language:** Python 3.11+
 - **Data Processing:** pandas, rapidfuzz (fuzzy matching)
-- **AI:** Google Gemini (2.0-flash) – free tier available
+- **AI:** OpenAI (gpt-4o-mini) / Google Gemini (2.0-flash) – switchable via env var
 - **UI:** Streamlit (demo), CLI (production)
 - **Testing:** pytest (26 test cases)
 - **Deployment:** Runs locally (no cloud dependencies)
@@ -159,15 +161,15 @@ Run with `streamlit run app.py`:
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Configure Gemini API key
+# 2. Configure API key
 cp .env.example .env
-# Edit .env: add your GEMINI_API_KEY from https://aistudio.google.com/app/apikey
+# Edit .env: add your OPENAI_API_KEY or GEMINI_API_KEY
 
 # 3. Generate test data
 python generate_data.py
 
 # 4. Run reconciliation
-python main.py                      # Full pipeline with Gemini
+python main.py                      # Full pipeline
 python main.py --skip-llm           # Deterministic only (free)
 streamlit run app.py                # Interactive UI
 
