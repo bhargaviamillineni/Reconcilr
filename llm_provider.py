@@ -1,7 +1,7 @@
 """
 LLM provider abstraction layer.
 Supports OpenAI, Gemini, and Groq. Configure via LLM_PROVIDER in .env.
-API keys are loaded from environment variables only.
+API keys are loaded from environment variables or Streamlit secrets.
 """
 
 import os
@@ -9,8 +9,28 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PROVIDER = os.getenv("LLM_PROVIDER", "openai").lower()
+# Try to load from Streamlit secrets if available (for Streamlit Cloud deployment)
+try:
+    import streamlit as st
+    if hasattr(st, 'secrets'):
+        PROVIDER = st.secrets.get("LLM_PROVIDER", os.getenv("LLM_PROVIDER", "openai")).lower()
+    else:
+        PROVIDER = os.getenv("LLM_PROVIDER", "openai").lower()
+except (ImportError, FileNotFoundError):
+    PROVIDER = os.getenv("LLM_PROVIDER", "openai").lower()
+
 REQUEST_TIMEOUT_SECONDS = 30
+
+
+def _get_secret(key: str, default: str = None) -> str:
+    """Get secret from Streamlit secrets or environment variable."""
+    try:
+        import streamlit as st
+        if hasattr(st, 'secrets') and key in st.secrets:
+            return st.secrets[key]
+    except (ImportError, FileNotFoundError):
+        pass
+    return os.getenv(key, default)
 
 
 def check_provider_ready() -> tuple:
@@ -21,8 +41,9 @@ def check_provider_ready() -> tuple:
             import openai  # Groq uses OpenAI SDK
         except ImportError:
             return False, "openai package not installed. Run: pip install openai"
-        if not os.getenv("GROQ_API_KEY") or os.getenv("GROQ_API_KEY") == "your_groq_key_here":
-            return False, "GROQ_API_KEY not set in .env"
+        api_key = _get_secret("GROQ_API_KEY")
+        if not api_key or api_key == "your_groq_key_here":
+            return False, "GROQ_API_KEY not set in .env or Streamlit secrets"
         return True, "Groq provider ready"
     
     elif PROVIDER == "gemini":
@@ -30,8 +51,9 @@ def check_provider_ready() -> tuple:
             import google.generativeai  # noqa: F401
         except ImportError:
             return False, "google-generativeai package not installed. Run: pip install google-generativeai"
-        if not os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY") == "your_gemini_key_here":
-            return False, "GEMINI_API_KEY not set in .env"
+        api_key = _get_secret("GEMINI_API_KEY")
+        if not api_key or api_key == "your_gemini_key_here":
+            return False, "GEMINI_API_KEY not set in .env or Streamlit secrets"
         return True, "Gemini provider ready"
 
     elif PROVIDER == "openai":
@@ -39,8 +61,9 @@ def check_provider_ready() -> tuple:
             import openai  # noqa: F401
         except ImportError:
             return False, "openai package not installed. Run: pip install openai"
-        if not os.getenv("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") == "your_openai_key_here":
-            return False, "OPENAI_API_KEY not set in .env"
+        api_key = _get_secret("OPENAI_API_KEY")
+        if not api_key or api_key == "your_openai_key_here":
+            return False, "OPENAI_API_KEY not set in .env or Streamlit secrets"
         return True, "OpenAI provider ready"
 
     else:
@@ -62,12 +85,12 @@ def call_llm(prompt: str) -> str:
 def _call_openai(prompt: str) -> str:
     from openai import OpenAI
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = _get_secret("OPENAI_API_KEY")
     if not api_key:
-        raise RuntimeError("OPENAI_API_KEY not set in .env")
+        raise RuntimeError("OPENAI_API_KEY not set in .env or Streamlit secrets")
 
     client = OpenAI(api_key=api_key, timeout=REQUEST_TIMEOUT_SECONDS)
-    model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    model = _get_secret("OPENAI_MODEL", "gpt-4o-mini")
 
     response = client.chat.completions.create(
         model=model,
@@ -81,16 +104,16 @@ def _call_groq(prompt: str) -> str:
     """Calls Groq API using OpenAI SDK."""
     from openai import OpenAI
 
-    api_key = os.getenv("GROQ_API_KEY")
+    api_key = _get_secret("GROQ_API_KEY")
     if not api_key:
-        raise RuntimeError("GROQ_API_KEY not set in .env")
+        raise RuntimeError("GROQ_API_KEY not set in .env or Streamlit secrets")
 
     client = OpenAI(
         api_key=api_key,
         base_url="https://api.groq.com/openai/v1",
         timeout=REQUEST_TIMEOUT_SECONDS
     )
-    model = os.getenv("GROQ_MODEL", "llama-3.1-70b-versatile")
+    model = _get_secret("GROQ_MODEL", "llama-3.1-70b-versatile")
 
     response = client.chat.completions.create(
         model=model,
@@ -103,12 +126,12 @@ def _call_groq(prompt: str) -> str:
 def _call_gemini(prompt: str) -> str:
     import google.generativeai as genai
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = _get_secret("GEMINI_API_KEY")
     if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not set in .env")
+        raise RuntimeError("GEMINI_API_KEY not set in .env or Streamlit secrets")
 
     genai.configure(api_key=api_key)
-    model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+    model_name = _get_secret("GEMINI_MODEL", "gemini-1.5-flash")
     if model_name.startswith("models/"):
         model_name = model_name.replace("models/", "")
     model = genai.GenerativeModel(model_name)
