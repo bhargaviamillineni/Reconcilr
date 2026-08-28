@@ -1,0 +1,64 @@
+order_id,settlement_id,is_match,note
+ORD-1000,STL-1000,True,clean match
+ORD-1001,STL-1001,True,clean match
+ORD-1002,STL-1002,True,clean match
+ORD-1003,STL-1003,True,clean match
+ORD-1004,STL-1004,True,clean match
+ORD-1005,STL-1005,True,clean match
+ORD-1006,STL-1006,True,clean match
+ORD-1007,STL-1007,True,clean match
+ORD-1008,STL-1008,True,clean match
+ORD-1009,STL-1009,True,clean match
+ORD-1010,STL-1010,True,clean match
+ORD-1011,STL-1011,True,clean match
+ORD-1012,STL-1012,True,clean match
+ORD-1013,STL-1013,True,clean match
+ORD-1014,STL-1014,True,clean match
+ORD-1015,STL-1015,True,clean match
+ORD-1016,STL-1016,True,clean match
+ORD-1017,STL-1017,True,clean match
+ORD-1018,STL-1018,True,clean match
+ORD-1019,STL-1019,True,clean match
+ORD-1020,STL-1020,True,clean match
+ORD-1021,STL-1021,True,clean match
+ORD-1022,STL-1022,True,clean match
+ORD-1023,STL-1023,True,clean match
+ORD-1024,STL-1024,True,clean match
+ORD-1025,STL-1025,True,clean match
+ORD-1026,STL-1026,True,clean match
+ORD-1027,STL-1027,True,clean match
+ORD-1028,STL-1028,True,clean match
+ORD-1029,STL-1029,True,clean match
+ORD-1030,STL-1030,True,fee-adjusted + fuzzy ref match
+ORD-1031,STL-1031,True,fee-adjusted + fuzzy ref match
+ORD-1032,STL-1032,True,fee-adjusted + fuzzy ref match
+ORD-1033,STL-1033,True,fee-adjusted + fuzzy ref match
+ORD-1034,STL-1034,True,fee-adjusted + fuzzy ref match
+ORD-1035,STL-1035,True,fee-adjusted + fuzzy ref match
+ORD-1036,STL-1036,True,fee-adjusted + fuzzy ref match
+ORD-1037,STL-1037,True,fee-adjusted + fuzzy ref match
+ORD-1038,STL-1038,True,fee-adjusted + fuzzy ref match
+ORD-1039,STL-1039,True,fee-adjusted + fuzzy ref match
+ORD-1040,STL-1040,True,fee-adjusted + fuzzy ref match
+ORD-1041,STL-1041,True,fee-adjusted + fuzzy ref match
+ORD-1042,STL-1042,True,fee-adjusted + fuzzy ref match
+ORD-1043,STL-1043,True,fee-adjusted + fuzzy ref match
+ORD-1044,STL-1044,True,fee-adjusted + fuzzy ref match
+ORD-1045,STL-1045,True,"ambiguous ref, needs reasoning"
+ORD-1046,STL-1046,True,"ambiguous ref, needs reasoning"
+ORD-1047,STL-1047,True,"ambiguous ref, needs reasoning"
+ORD-1048,STL-1048,True,"ambiguous ref, needs reasoning"
+ORD-1049,STL-1049,True,"ambiguous ref, needs reasoning"
+ORD-1050,STL-1050,True,"ambiguous ref, needs reasoning"
+ORD-1051,STL-1051,True,"ambiguous ref, needs reasoning"
+ORD-1052,STL-1052,True,"ambiguous ref, needs reasoning"
+ORD-1053,,False,"cancelled order, no settlement expected"
+,STL-1053,False,"stray settlement adjustment, no order"
+ORD-1054,,False,"cancelled order, no settlement expected"
+,STL-1054,False,"stray settlement adjustment, no order"
+ORD-1055,,False,"cancelled order, no settlement expected"
+,STL-1055,False,"stray settlement adjustment, no order"
+ORD-1056,,False,"cancelled order, no settlement expected"
+,STL-1056,False,"stray settlement adjustment, no order"
+ORD-1057,,False,"cancelled order, no settlement expected"
+,STL-1057,False,"stray settlement adjustment, no order"
