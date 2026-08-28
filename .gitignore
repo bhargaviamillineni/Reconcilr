@@ -1,0 +1,17 @@
+# Secrets -- never commit real API keys
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generated output (regeneratable, don't need to be in version control)
+output/
+data/*.csv
