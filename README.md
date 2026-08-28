@@ -4,21 +4,6 @@
 
 **"Reconcilr — closes the gap between what you sold and what actually landed in your account."**
 
-![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow) ![Tests](https://img.shields.io/badge/tests-32%20passing-brightgreen) ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
-
----
-
-## ⚠️ Security Notice
-
-**IMPORTANT**: This project includes sensitive API key management. Before using:
-
-1. **NEVER commit `.env` with real API keys** (it's gitignored by default)
-2. Copy `.env.example` to `.env` and add your own API keys
-3. If you accidentally expose keys, **revoke them immediately** and generate new ones
-4. See [SECURITY.md](SECURITY.md) for full security guidelines
-
-**File Upload Limits**: 10MB max file size, 10,000 max rows (use CLI for larger datasets)
-
 ---
 
 ## The Problem
@@ -49,7 +34,7 @@ A **two-layer hybrid matcher** that solves 80% of cases with deterministic rules
 ✅ **Full Audit Trail** – Every AI decision logged with reasoning (confidence scores, match logic)  
 ✅ **Privacy-First** – Customer names/emails never sent to APIs; phone numbers auto-redacted  
 ✅ **Order-Independent** – Global assignment algorithm; results never depend on CSV row order  
-✅ **Production-Ready** – Retry with backoff, input validation, hallucination detection, **32 automated tests (60% coverage)**  
+✅ **Production-Ready** – Retry with backoff, input validation, hallucination detection, 26 automated tests  
 ✅ **Provider-Agnostic** – Swap OpenAI/Gemini with one env var; no vendor lock-in  
 
 ---
@@ -128,7 +113,7 @@ A **two-layer hybrid matcher** that solves 80% of cases with deterministic rules
 
 - **Language:** Python 3.11+
 - **Data Processing:** pandas, rapidfuzz (fuzzy matching)
-- **AI:** OpenAI (gpt-4o-mini) / Google Gemini (2.0-flash) – switchable via env var
+- **AI:** Google Gemini (2.0-flash) – free tier available
 - **UI:** Streamlit (demo), CLI (production)
 - **Testing:** pytest (26 test cases)
 - **Deployment:** Runs locally (no cloud dependencies)
@@ -174,15 +159,15 @@ Run with `streamlit run app.py`:
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Configure API key
+# 2. Configure Gemini API key
 cp .env.example .env
-# Edit .env: add your OPENAI_API_KEY or GEMINI_API_KEY
+# Edit .env: add your GEMINI_API_KEY from https://aistudio.google.com/app/apikey
 
 # 3. Generate test data
 python generate_data.py
 
 # 4. Run reconciliation
-python main.py                      # Full pipeline
+python main.py                      # Full pipeline with Gemini
 python main.py --skip-llm           # Deterministic only (free)
 streamlit run app.py                # Interactive UI
 
