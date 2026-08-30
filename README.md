@@ -290,6 +290,6 @@ Ground truth validation shows real accuracy (100% precision, 91% recall). We rep
 ---
 
 
-# Live Demo - https://reconcilr-ledgermatch.streamlit.app/
-# Youtube - https://youtu.be/9zsdKJ9wzYA?si=Gub3wnhS1TNAmHwu
-# PPT - https://canva.link/nxvu4vcyhyzetb8
+ ### Live Demo - https://reconcilr-ledgermatch.streamlit.app/
+ ### Youtube - https://youtu.be/9zsdKJ9wzYA?si=Gub3wnhS1TNAmHwu
+ ### PPT - https://canva.link/nxvu4vcyhyzetb8
